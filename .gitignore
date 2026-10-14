@@ -1,0 +1,26 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor and local tool folders
+.vscode/
+.idea/
+*.swp
+
+# Dependencies and build output (not used by this site, but harmless)
+node_modules/
+.vercel/
+dist/
+
+# Large local media (host these elsewhere, see notes below)
+assets/tv-vids/*.mp4
+assets/tv-vids/*.mov
+assets/tv-vids/*.avi
+assets/tv-vids/*.gif
+!assets/tv-vids/planets.gif
+
+# Local checks and backups
+check-files.html
+video-test.html
+tv-originals/
