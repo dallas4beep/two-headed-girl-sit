@@ -3,17 +3,69 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact · TWO HEADED GIRL — BOOKINGS</title>
-    <meta name="description" content="Book two headed girl for live performances, sync opportunities, or press inquiries." />
+  <title>Contact | TWO HEADED GIRL</title>
+  <meta name="description" content="Book Two Headed Girl for live shows, sync, or press. Send a message through the contact form." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;600&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/styles.css" />
+  <style>
+    .contact-form {
+      max-width: 640px;
+      margin: 0 auto;
+      display: grid;
+      gap: 1.25rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .contact-form .field { display: grid; gap: .4rem; }
+    .contact-form label {
+      font-size: .75rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: #ccff00;
+    }
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+      background: #0a0a0a;
+      color: #f5f5f5;
+      border: 1px solid #3a3a3a;
+      padding: .85rem 1rem;
+      font: inherit;
+      border-radius: 0;
+    }
+    .contact-form input:focus,
+    .contact-form select:focus,
+    .contact-form textarea:focus {
+      outline: none;
+      border-color: #ccff00;
+      box-shadow: 0 0 0 1px #ccff00;
+    }
+    .contact-form textarea { min-height: 160px; resize: vertical; }
+    .contact-form button {
+      justify-self: start;
+      background: #ccff00;
+      color: #0a0a0a;
+      border: 0;
+      padding: .9rem 1.6rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem;
+      letter-spacing: .08em;
+      cursor: pointer;
+    }
+    .contact-form button:disabled { opacity: .5; cursor: wait; }
+    .contact-form .status {
+      font-size: .8rem;
+      color: #ccff00;
+      min-height: 1.2em;
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
 
   <aside class="side-rail" aria-label="TWO HEADED GIRL wordmark">
-    <div class="side-rail__mark">TWO HEADED GIRL </div>
+    <div class="side-rail__mark">TWO HEADED GIRL</div>
     <span class="side-rail__pulse" aria-hidden="true"></span>
     <div class="side-rail__year">EST. 1998 · HARTFORD</div>
   </aside>
@@ -27,139 +79,58 @@
         <li><a class="nav__link" href="index.html">Home</a></li>
         <li><a class="nav__link" href="releases.html">Releases</a></li>
         <li><a class="nav__link" href="artists.html">Artists</a></li>
-        <li><a class="nav__link" href="shows.html">SHOWS</a></li>
+        <li><a class="nav__link" href="shows.html">Shows</a></li>
+        <li><a class="nav__link is-active" href="contact.html">Contact</a></li>
       </ul>
     </nav>
     <button class="menu-toggle" data-menu-toggle aria-expanded="false">Menu</button>
   </header>
 
   <main class="page">
+
     <section class="page-head">
-      <p class="page-head__crumb"><a href="index.html">TWO HEADED GIRL</a> / Contact / BOOKINGS &amp; MORE</p>
-      <h1 class="page-head__title">Talk to <em>US.</em></h1>
+      <p class="page-head__crumb"><a href="index.html">TWO HEADED GIRL</a> / Contact / Bookings &amp; more</p>
+      <h1 class="page-head__title">Talk to <em>us.</em></h1>
     </section>
 
-    
-
-      </aside>
-
-     div>
-  <h3>Send a message</h3>
-  <form class="form-grid" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
-    <div class="field">
-      <label for="name">Name</label>
-      <input type="text" id="name" name="name" placeholder="Your name" required />
-    </div>
-    <div class="field">
-      <label for="from">Email</label>
-      <input type="email" id="from" name="email" placeholder="you@signal.fm" required />
-    </div>
-    <div class="field">
-      <label for="topic">What is this about?</label>
-      <select id="topic" name="topic" required>
-        <option>Press / interview</option>
-        <option>Booking</option>
-        <option>Other</option>
-      </select>
-    </div>
-    <div class="field">
-      <label for="msg">Message</label>
-      <textarea id="msg" name="message" placeholder="WE WILL GET BACK TO YOU SOON." required></textarea>
-    </div>
-    <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
-    <button type="submit" class="submit">Transmit message →</button>
-    <p id="form-status" role="status" aria-live="polite"></p>
-  </form>
-</div>
-
-<script>
-  const form = document.getElementById('contact-form');
-  const status = document.getElementById('form-status');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      status.textContent = 'Please fill in every field.';
-      return;
-    }
-
-    const button = form.querySelector('button');
-    button.disabled = true;
-    status.textContent = 'Sending...';
-
-    try {
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { Accept: 'application/json' }
-      });
-      if (res.ok) {
-        form.reset();
-        status.textContent = 'Thanks. We will get back to you soon.';
-      } else {
-        status.textContent = 'Something went wrong. Please try again.';
-      }
-    } catch (err) {
-      status.textContent = 'Network error. Please try again.';
-    } finally {
-      button.disabled = false;
-    }
-  });
-</script>
-
-    <section class="section">
-      <div class="cta-block">
-        <p class="cta-block__eyebrow">Transmission · Issue 044</p>
-        <h2 class="cta-block__title">One <em>email</em>, one a month.</h2>
-        <p class="cta-block__sub">Pre-order windows, demo dates, ticket pre-sales, and the radio schedule. Roughly one email a month, never more, and you can leave at any time.</p>
-        <form class="subscribe" action="#" method="post" novalidate>
-          <input class="subscribe__input" type="email" name="email" placeholder="your.address@signal.fm" required />
-          <button class="subscribe__btn" type="submit">Subscribe</button>
-        </form>
+    <section class="section" aria-labelledby="contact-form-heading">
+      <div class="section__head">
+        <span class="section__num">· Contact</span>
+        <h2 class="section__title" id="contact-form-heading">Send a <em>message</em></h2>
       </div>
+
+      <form class="contact-form" id="contact-form" novalidate>
+        <div class="field">
+          <label for="c-name">Name</label>
+          <input id="c-name" name="entry.ENTRY_NAME" type="text" placeholder="Your name" required />
+        </div>
+        <div class="field">
+          <label for="c-email">Email</label>
+          <input id="c-email" name="entry.ENTRY_EMAIL" type="email" placeholder="you@signal.fm" required />
+        </div>
+        <div class="field">
+          <label for="c-topic">What is this about?</label>
+          <select id="c-topic" name="entry.ENTRY_TOPIC" required>
+            <option>Press / interview</option>
+            <option>Booking</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="c-msg">Message</label>
+          <textarea id="c-msg" name="entry.ENTRY_MESSAGE" placeholder="WE WILL GET BACK TO YOU SOON." required></textarea>
+        </div>
+        <button type="submit">Transmit message →</button>
+        <p class="status" id="c-status" role="status" aria-live="polite"></p>
+      </form>
     </section>
+
   </main>
 
   <footer class="foot">
     <div class="foot__grid">
       <div class="foot__col">
         <p class="foot__brand">TWO HEADED GIRL</p>
-        <p class="foot__about">An independent music label working at the intersection of synthwave, hyperpop, and ambient electronics. Berlin · Lisbon · Glasgow · São Paulo.</p>
+        <p class="foot__about">Two Headed Girl is a queer punk-pop band made up of identical twins Angie and Celeste.</p>
       </div>
-      <div class="foot__col">
-        <h4>Catalogue</h4>
-        <ul>
-          <li><a href="releases.html">All releases</a></li>
-          <li><a href="releases.html#vinyl">Vinyl shop</a></li>
-          <li><a href="releases.html#cassette">Cassette dubs</a></li>
-          <li><a href="releases.html#archive">Archive</a></li>
-        </ul>
-      </div>
-      <div class="foot__col">
-        <h4>The label</h4>
-        <ul>
-          <li><a href="artists.html">Artists</a></li>
-          <li><a href="shows.html">Live shows</a></li>
-          <li><a href="contact.html">Sync &amp; press</a></li>
-        </ul>
-      </div>
-      <div class="foot__col">
-        <h4>Channels</h4>
-        <ul>
-          <li><a href="#">TWO HEADED GIRL Radio</a></li>
-          <li><a href="#">Bandcamp</a></li>
-          <li><a href="#">Instagram</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="foot__btm">
-      <span>© <span data-year>2026</span> TWO HEADED GIRL · Berlin</span>
-  
-    </div>
-  </footer>
-
-  <script src="assets/js/main.js"></script>
-</body>
-</html>
+      <div
