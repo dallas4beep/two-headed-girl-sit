@@ -1705,3 +1705,14 @@ body::after {
   .foot__grid { grid-template-columns: 1fr; }
   .two-col { grid-template-columns: 1fr; }
 }
+/* Stack artist cards on mobile */
+@media (max-width: 720px) {
+  .artist-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .artist-card {
+    width: 100%;
+  }
+}
