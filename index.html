@@ -281,232 +281,218 @@ Let it soundtrack the teen soap of your life."</p>
       </div>
     </section>
 
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Classified FAQ | Two Headed Girl</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --oxblood: #1a0410;
-    --pink: #ff3d8b;
-    --cream: #f4e9d8;
-    --ink: #0d0d0d;
-  }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; background: var(--oxblood); color: var(--cream); font-family: "Courier Prime", monospace; }
-  body {
-    min-height: 100vh;
-    background:
-      radial-gradient(circle at 15% 10%, rgba(255,61,139,.18), transparent 40%),
-      radial-gradient(circle at 90% 90%, rgba(255,61,139,.12), transparent 45%),
-      var(--oxblood);
-  }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 48px 20px 80px; }
+    <!-- ==========  CLASSIFIED FAQ  ========== -->
+    <section class="section faq-classified" id="faq" aria-labelledby="faq-heading">
+      <style>
+        .faq-classified {
+          --fc-pink: #ff3d8b;
+          --fc-ink: #0d0d0d;
+          --fc-bar: #f4e9d8;
+          max-width: 760px;
+          margin: 0 auto;
+          font-family: "JetBrains Mono", monospace;
+          background: none;
+        }
+        .faq-classified .section__head { margin-bottom: 24px; }
+        .faq-classified .fc-head { border-bottom: 2px dashed var(--fc-pink); padding-bottom: 18px; margin-bottom: 28px; }
+        .faq-classified .stamp {
+          display: inline-block; font-family: "Bebas Neue", sans-serif; font-size: 14px; letter-spacing: 3px;
+          color: var(--fc-pink); border: 2px solid var(--fc-pink); padding: 4px 10px; transform: rotate(-2deg);
+        }
+        .faq-classified .sub { font-style: italic; opacity: .75; margin: 10px 0 0; }
 
-  header { border-bottom: 2px dashed var(--pink); padding-bottom: 18px; margin-bottom: 28px; }
-  .stamp {
-    display: inline-block; font-family: "Bebas Neue", sans-serif; font-size: 14px; letter-spacing: 3px;
-    color: var(--pink); border: 2px solid var(--pink); padding: 4px 10px; transform: rotate(-2deg);
-  }
-  h1 { font-family: "Bebas Neue", sans-serif; font-weight: 400; font-size: clamp(56px, 12vw, 96px); line-height: .9; margin: 14px 0 6px; letter-spacing: 1px; }
-  .sub { font-style: italic; opacity: .75; margin: 0; }
+        .faq-classified .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 24px; }
+        .faq-classified .fc-search {
+          flex: 1 1 260px; background: transparent; color: inherit; border: 0; border-bottom: 2px solid currentColor;
+          font: inherit; padding: 8px 2px; outline: none;
+        }
+        .faq-classified .fc-search:focus { border-bottom-color: var(--fc-pink); }
+        .faq-classified .fc-btn, .faq-classified .fc-chip {
+          background: transparent; color: inherit; border: 2px solid currentColor; padding: 6px 12px;
+          font: inherit; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-size: 13px;
+        }
+        .faq-classified .fc-btn:hover, .faq-classified .fc-chip:hover,
+        .faq-classified .fc-chip[aria-pressed="true"] { background: var(--fc-pink); border-color: var(--fc-pink); color: var(--fc-ink); }
+        .faq-classified .fc-btn:focus-visible, .faq-classified .fc-chip:focus-visible,
+        .faq-classified .fc-q:focus-visible, .faq-classified .fc-search:focus-visible { outline: 3px solid var(--fc-pink); outline-offset: 3px; }
+        .faq-classified .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
 
-  .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 24px; }
-  .search {
-    flex: 1 1 260px; background: transparent; color: var(--cream); border: 0; border-bottom: 2px solid var(--cream);
-    font: inherit; padding: 8px 2px; outline: none;
-  }
-  .search:focus { border-bottom-color: var(--pink); }
-  .btn, .chip {
-    background: transparent; color: var(--cream); border: 2px solid var(--cream); padding: 6px 12px;
-    font: inherit; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; font-size: 13px;
-  }
-  .btn:hover, .chip:hover, .chip[aria-pressed="true"] { background: var(--pink); border-color: var(--pink); color: var(--ink); }
-  .btn:focus-visible, .chip:focus-visible, .q:focus-visible, .search:focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+        .faq-classified .fc-item { border-top: 1px solid rgba(127,127,127,.35); padding: 14px 0; }
+        .faq-classified .fc-item[hidden] { display: none; }
+        .faq-classified .fc-q { all: unset; cursor: pointer; display: block; width: 100%; font-size: 17px; line-height: 1.4; }
+        .faq-classified .case { font-family: "Bebas Neue", sans-serif; color: var(--fc-pink); letter-spacing: 2px; margin-right: 8px; font-size: 20px; }
+        .faq-classified .redact {
+          background: var(--fc-bar); color: transparent; border-radius: 2px; padding: 0 4px; cursor: pointer;
+          transition: background .4s, color .4s; user-select: none;
+        }
+        .faq-classified .fc-q[aria-expanded="true"] .redact { background: transparent; color: inherit; user-select: auto; box-shadow: inset 0 -2px 0 var(--fc-pink); }
+        .faq-classified .fc-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s ease, margin .45s ease; margin-top: 0; }
+        .faq-classified .fc-a.open { grid-template-rows: 1fr; margin-top: 12px; }
+        .faq-classified .fc-a > div { overflow: hidden; }
+        .faq-classified .fc-a p { margin: 0 0 10px; padding-left: 14px; border-left: 3px solid var(--fc-pink); line-height: 1.6; }
+        .faq-classified .memo { font-size: 13px; opacity: .6; letter-spacing: 1px; text-transform: uppercase; }
 
-  .item { border-top: 1px solid rgba(244,233,216,.25); padding: 14px 0; }
-  .item[hidden] { display: none; }
-  .q {
-    all: unset; cursor: pointer; display: block; width: 100%; font-size: 18px; line-height: 1.4;
-  }
-  .q .case { font-family: "Bebas Neue", sans-serif; color: var(--pink); letter-spacing: 2px; margin-right: 8px; font-size: 20px; }
-  .redact {
-    background: var(--ink); color: transparent; border-radius: 2px; padding: 0 4px; cursor: pointer;
-    transition: background .4s, color .4s;
-    user-select: none;
-  }
-  .q[aria-expanded="true"] .redact { background: transparent; color: var(--cream); user-select: auto; box-shadow: inset 0 -2px 0 var(--pink); }
-  .a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s ease, margin .45s ease; margin-top: 0; }
-  .a.open { grid-template-rows: 1fr; margin-top: 12px; }
-  .a > div { overflow: hidden; }
-  .a p { margin: 0 0 10px; padding-left: 14px; border-left: 3px solid var(--pink); line-height: 1.6; }
-  .memo { font-size: 13px; opacity: .6; letter-spacing: 1px; text-transform: uppercase; }
+        .faq-classified .narrator { margin-top: 36px; padding: 16px; border: 2px dashed var(--fc-pink); font-style: italic; min-height: 3.2em; }
+        .faq-classified .narrator .muses { color: var(--fc-pink); font-style: normal; font-family: "Bebas Neue", sans-serif; letter-spacing: 2px; }
+        .faq-classified .fc-empty { display: none; font-style: italic; opacity: .7; margin: 20px 0; }
+        .faq-classified .fc-empty.show { display: block; }
+        .faq-classified mark { background: var(--fc-pink); color: var(--fc-ink); padding: 0 2px; }
+        @media (prefers-reduced-motion: reduce) { .faq-classified * { transition: none !important; } }
+      </style>
 
-  .narrator { margin-top: 36px; padding: 16px; border: 2px dashed var(--pink); font-style: italic; min-height: 3.2em; }
-  .narrator span { color: var(--pink); font-style: normal; font-family: "Bebas Neue", sans-serif; letter-spacing: 2px; }
-  .empty { display: none; font-style: italic; opacity: .7; margin: 20px 0; }
-  .empty.show { display: block; }
-  mark { background: var(--pink); color: var(--ink); padding: 0 2px; }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
-</style>
-</head>
-<body>
-<div class="wrap">
-  <header>
-    <span class="stamp">Eyes Only</span>
-    <h1>Classified FAQ</h1>
-    <p class="sub">Questions the bouncer has asked us. Answers from the file. Click a bar to declassify.</p>
-  </header>
+      <div class="section__head">
+        <span class="section__num">· FAQ</span>
+        <h2 class="section__title" id="faq-heading">Classified <em>FAQ</em></h2>
+      </div>
 
-  <div class="controls">
-    <input class="search" id="search" type="search" placeholder="search the file..." aria-label="Search FAQ">
-    <button class="btn" id="toggle-all" type="button" aria-expanded="false">Declassify all</button>
-  </div>
+      <header class="fc-head">
+        <span class="stamp">Eyes Only</span>
+        <p class="sub">Questions the bouncer has asked us. Answers from the file. Click a bar to declassify.</p>
+      </header>
 
-  <div class="chips" role="group" aria-label="Filter by category">
-    <button class="chip" type="button" data-cat="all" aria-pressed="true">All</button>
-    <button class="chip" type="button" data-cat="about" aria-pressed="false">About</button>
-    <button class="chip" type="button" data-cat="music" aria-pressed="false">Music</button>
-    <button class="chip" type="button" data-cat="shows" aria-pressed="false">Shows</button>
-  </div>
+      <div class="controls">
+        <input class="fc-search" type="search" placeholder="search the file..." aria-label="Search FAQ">
+        <button class="fc-btn" type="button" data-toggle-all aria-expanded="false">Declassify all</button>
+      </div>
 
-  <section id="faq">
-    <div class="item" data-cat="about" data-text="who is two headed girl twins angie celeste punk pop band queer">
-      <button class="q" type="button" aria-expanded="false" aria-controls="a1">
-        <span class="case">Case 01</span>Who is Two Headed Girl? <span class="redact">[the twins]</span>
-      </button>
-      <div class="a" id="a1"><div><p>Two Headed Girl is a queer punk-pop band made up of identical twins Angie and Celeste. Their sound mixes indie pop hooks with punk energy.</p><span class="memo">Source: the file</span></div></div>
-    </div>
+      <div class="chips" role="group" aria-label="Filter by category">
+        <button class="fc-chip" type="button" data-cat="all" aria-pressed="true">All</button>
+        <button class="fc-chip" type="button" data-cat="about" aria-pressed="false">About</button>
+        <button class="fc-chip" type="button" data-cat="music" aria-pressed="false">Music</button>
+        <button class="fc-chip" type="button" data-cat="shows" aria-pressed="false">Shows</button>
+      </div>
 
-    <div class="item" data-cat="music" data-text="listen spotify apple music bandcamp tidal youtube">
-      <button class="q" type="button" aria-expanded="false" aria-controls="a2">
-        <span class="case">Case 02</span>Where can I listen to Two Headed Girl? <span class="redact">[the platforms]</span>
-      </button>
-      <div class="a" id="a2"><div><p>The band is on Spotify, Apple Music, Bandcamp, Tidal, and YouTube.</p><span class="memo">Source: the file</span></div></div>
-    </div>
+      <div class="fc-list">
+        <div class="fc-item" data-cat="about" data-text="who is two headed girl twins angie celeste punk pop band queer">
+          <button class="fc-q" type="button" aria-expanded="false" aria-controls="fc-a1">
+            <span class="case">Case 01</span>Who is Two Headed Girl? <span class="redact">[the twins]</span>
+          </button>
+          <div class="fc-a" id="fc-a1"><div><p>Two Headed Girl is a queer punk-pop band made up of identical twins Angie and Celeste. Their sound mixes indie pop hooks with punk energy.</p><span class="memo">Source: the file</span></div></div>
+        </div>
 
-    <div class="item" data-cat="music" data-text="latest release company girl trash music video single">
-      <button class="q" type="button" aria-expanded="false" aria-controls="a3">
-        <span class="case">Case 03</span>What is the latest release? <span class="redact">[Company and Girl Trash]</span>
-      </button>
-      <div class="a" id="a3"><div><p>The latest single is Company. The Girl Trash music video is also out now.</p><span class="memo">Source: the file</span></div></div>
-    </div>
+        <div class="fc-item" data-cat="music" data-text="listen spotify apple music bandcamp tidal youtube">
+          <button class="fc-q" type="button" aria-expanded="false" aria-controls="fc-a2">
+            <span class="case">Case 02</span>Where can I listen to Two Headed Girl? <span class="redact">[the platforms]</span>
+          </button>
+          <div class="fc-a" id="fc-a2"><div><p>The band is on Spotify, Apple Music, Bandcamp, Tidal, and YouTube.</p><span class="memo">Source: the file</span></div></div>
+        </div>
 
-    <div class="item" data-cat="shows" data-text="next show when where october 23 house of nancy brooklyn">
-      <button class="q" type="button" aria-expanded="false" aria-controls="a4">
-        <span class="case">Case 04</span>When and where is the next show? <span class="redact">[date and venue]</span>
-      </button>
-      <div class="a" id="a4"><div><p>The next show is Friday, October 23, 2026, at 7:00 p.m. at House of Nancy in Brooklyn.</p><span class="memo">Source: the file</span></div></div>
-    </div>
+        <div class="fc-item" data-cat="music" data-text="latest release company girl trash music video single">
+          <button class="fc-q" type="button" aria-expanded="false" aria-controls="fc-a3">
+            <span class="case">Case 03</span>What is the latest release? <span class="redact">[Company and Girl Trash]</span>
+          </button>
+          <div class="fc-a" id="fc-a3"><div><p>The latest single is Company. The Girl Trash music video is also out now.</p><span class="memo">Source: the file</span></div></div>
+        </div>
 
-    <div class="item" data-cat="shows" data-text="book booking press inquiries contact">
-      <button class="q" type="button" aria-expanded="false" aria-controls="a5">
-        <span class="case">Case 05</span>How do I book Two Headed Girl? <span class="redact">[the booking desk]</span>
-      </button>
-      <div class="a" id="a5"><div><p>For show, press, and booking inquiries, reach out directly.</p><span class="memo">Source: the file</span></div></div>
-    </div>
-  </section>
+        <div class="fc-item" data-cat="shows" data-text="next show when where october 23 house of nancy brooklyn">
+          <button class="fc-q" type="button" aria-expanded="false" aria-controls="fc-a4">
+            <span class="case">Case 04</span>When and where is the next show? <span class="redact">[date and venue]</span>
+          </button>
+          <div class="fc-a" id="fc-a4"><div><p>The next show is Friday, October 23, 2026, at 7:00 p.m. at House of Nancy in Brooklyn.</p><span class="memo">Source: the file</span></div></div>
+        </div>
 
-  <p class="empty" id="empty">No files match that search. Try a different word.</p>
+        <div class="fc-item" data-cat="shows" data-text="book booking press inquiries contact">
+          <button class="fc-q" type="button" aria-expanded="false" aria-controls="fc-a5">
+            <span class="case">Case 05</span>How do I book Two Headed Girl? <span class="redact">[the booking desk]</span>
+          </button>
+          <div class="fc-a" id="fc-a5"><div><p>For show, press, and booking inquiries, reach out directly.</p><span class="memo">Source: the file</span></div></div>
+        </div>
+      </div>
 
-  <div class="narrator" aria-live="polite"><span>THE MUSES SAY:</span> <span id="line"></span></div>
-</div>
+      <p class="fc-empty">No files match that search. Try a different word.</p>
 
-<script>
-(function () {
-  const items = Array.from(document.querySelectorAll('.item'));
-  const search = document.getElementById('search');
-  const empty = document.getElementById('empty');
-  const toggleAll = document.getElementById('toggle-all');
-  const chips = Array.from(document.querySelectorAll('.chip'));
-  const line = document.getElementById('line');
-  let activeCat = 'all';
+      <div class="narrator" aria-live="polite"><span class="muses">THE MUSES SAY:</span> <span data-line></span></div>
 
-  const lines = [
-    'Every answer is a little bit true and a little bit a cover story.',
-    'Masks came off. The cell did not forget.',
-    'Read the file twice. Then read it like a gossip column.',
-    'Clown school is in session. Attendance is mandatory.',
-    'The bouncer knows. The bouncer always knows.'
-  ];
-  let li = 0, ci = 0, typing = true;
-  function type() {
-    const target = lines[li];
-    if (typing) {
-      line.textContent = target.slice(0, ++ci);
-      if (ci >= target.length) { typing = false; setTimeout(type, 2400); return; }
-    } else {
-      line.textContent = target.slice(0, --ci);
-      if (ci <= 0) { typing = true; li = (li + 1) % lines.length; setTimeout(type, 300); return; }
-    }
-    setTimeout(type, typing ? 38 : 18);
-  }
-  type();
+      <script>
+      (function () {
+        var root = document.querySelector('.faq-classified');
+        if (!root) return;
+        var items = Array.prototype.slice.call(root.querySelectorAll('.fc-item'));
+        var search = root.querySelector('.fc-search');
+        var empty = root.querySelector('.fc-empty');
+        var toggleAll = root.querySelector('[data-toggle-all]');
+        var chips = Array.prototype.slice.call(root.querySelectorAll('.fc-chip'));
+        var line = root.querySelector('[data-line]');
+        var activeCat = 'all';
 
-  function highlight(el, term) {
-    const q = el.querySelector('.q');
-    const original = q.dataset.original || q.innerHTML;
-    q.dataset.original = original;
-    if (!term) { q.innerHTML = original; return; }
-    const safe = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    q.innerHTML = original.replace(new RegExp('(' + safe + ')(?![^<]*>)', 'gi'), '<mark>$1</mark>');
-  }
+        var lines = [
+          'Every answer is a little bit true and a little bit a cover story.',
+          'Masks came off. The cell did not forget.',
+          'Read the file twice. Then read it like a gossip column.',
+          'Clown school is in session. Attendance is mandatory.',
+          'The bouncer knows. The bouncer always knows.'
+        ];
+        var li = 0, ci = 0, typing = true;
+        function type() {
+          var target = lines[li];
+          if (typing) {
+            line.textContent = target.slice(0, ++ci);
+            if (ci >= target.length) { typing = false; setTimeout(type, 2400); return; }
+          } else {
+            line.textContent = target.slice(0, --ci);
+            if (ci <= 0) { typing = true; li = (li + 1) % lines.length; setTimeout(type, 300); return; }
+          }
+          setTimeout(type, typing ? 38 : 18);
+        }
+        type();
 
-  function applyFilters() {
-    const term = search.value.trim().toLowerCase();
-    let visible = 0;
-    items.forEach(item => {
-      const catOk = activeCat === 'all' || item.dataset.cat === activeCat;
-      const hay = (item.dataset.text + ' ' + item.textContent).toLowerCase();
-      const textOk = !term || hay.includes(term);
-      const show = catOk && textOk;
-      item.hidden = !show;
-      if (show) visible++;
-      highlight(item, term);
-    });
-    empty.classList.toggle('show', visible === 0);
-  }
+        function highlight(item, term) {
+          var q = item.querySelector('.fc-q');
+          var original = q.dataset.original || q.innerHTML;
+          q.dataset.original = original;
+          if (!term) { q.innerHTML = original; return; }
+          var safe = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          q.innerHTML = original.replace(new RegExp('(' + safe + ')(?![^<]*>)', 'gi'), '<mark>$1</mark>');
+        }
 
-  items.forEach(item => {
-    const q = item.querySelector('.q');
-    const a = item.querySelector('.a');
-    q.addEventListener('click', () => {
-      const open = q.getAttribute('aria-expanded') === 'true';
-      q.setAttribute('aria-expanded', String(!open));
-      a.classList.toggle('open', !open);
-    });
-  });
+        function applyFilters() {
+          var term = search.value.trim().toLowerCase();
+          var visible = 0;
+          items.forEach(function (item) {
+            var catOk = activeCat === 'all' || item.dataset.cat === activeCat;
+            var hay = (item.dataset.text + ' ' + item.textContent).toLowerCase();
+            var show = catOk && (!term || hay.indexOf(term) !== -1);
+            item.hidden = !show;
+            if (show) visible++;
+            highlight(item, term);
+          });
+          empty.classList.toggle('show', visible === 0);
+        }
 
-  toggleAll.addEventListener('click', () => {
-    const openAll = toggleAll.getAttribute('aria-expanded') !== 'true';
-    toggleAll.setAttribute('aria-expanded', String(openAll));
-    toggleAll.textContent = openAll ? 'Classify all' : 'Declassify all';
-    items.forEach(item => {
-      if (item.hidden) return;
-      item.querySelector('.q').setAttribute('aria-expanded', String(openAll));
-      item.querySelector('.a').classList.toggle('open', openAll);
-    });
-  });
+        items.forEach(function (item) {
+          var q = item.querySelector('.fc-q');
+          var a = item.querySelector('.fc-a');
+          q.addEventListener('click', function () {
+            var open = q.getAttribute('aria-expanded') === 'true';
+            q.setAttribute('aria-expanded', String(!open));
+            a.classList.toggle('open', !open);
+          });
+        });
 
-  chips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      activeCat = chip.dataset.cat;
-      chips.forEach(c => c.setAttribute('aria-pressed', String(c === chip)));
-      applyFilters();
-    });
-  });
+        toggleAll.addEventListener('click', function () {
+          var openAll = toggleAll.getAttribute('aria-expanded') !== 'true';
+          toggleAll.setAttribute('aria-expanded', String(openAll));
+          toggleAll.textContent = openAll ? 'Classify all' : 'Declassify all';
+          items.forEach(function (item) {
+            if (item.hidden) return;
+            item.querySelector('.fc-q').setAttribute('aria-expanded', String(openAll));
+            item.querySelector('.fc-a').classList.toggle('open', openAll);
+          });
+        });
 
-  search.addEventListener('input', applyFilters);
-  applyFilters();
-})();
-</script>
-</body>
-</html>
+        chips.forEach(function (chip) {
+          chip.addEventListener('click', function () {
+            activeCat = chip.dataset.cat;
+            chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c === chip)); });
+            applyFilters();
+          });
+        });
+
+        search.addEventListener('input', applyFilters);
+        applyFilters();
+      })();
+      </script>
+    </section>
 
     <!-- ==========  CTA / SUBSCRIBE  ========== -->
     <section class="section" aria-labelledby="cta-heading">
