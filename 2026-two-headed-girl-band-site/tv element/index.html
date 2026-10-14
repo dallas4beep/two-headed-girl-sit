@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two Headed Girl TV Network</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #050505;
+            color: #ffffff;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .chunky-font {
+            font-family: 'Anton', sans-serif;
+            letter-spacing: 0.05em;
+        }
+
+        .mono-font {
+            font-family: 'Space Mono', monospace;
+        }
+
+        .wood-tv-cabinet {
+            background: #2b1708;
+            background-image:
+                radial-gradient(circle at 50% 50%, rgba(80, 40, 15, 0.4) 0%, rgba(20, 10, 5, 0.9) 100%),
+                repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(0,0,0,0.15) 4px, rgba(0,0,0,0.15) 8px),
+                linear-gradient(135deg, #4a2511 0%, #2b1708 50%, #170d04 100%);
+            border: 10px solid #140a03;
+            box-shadow:
+                0 30px 60px -15px rgba(0, 0, 0, 0.95),
+                inset 0 3px 6px rgba(255, 255, 255, 0.15),
+                inset 0 -15px 30px rgba(0, 0, 0, 0.85),
+                0 0 40px rgba(204, 255, 0, 0.1);
+            border-radius: 1.5rem;
+        }
+
+        .speaker-grille {
+            background-color: #1a1512;
+            background-image:
+                radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                radial-gradient(rgba(0, 0, 0, 0.5) 1px, transparent 1px);
+            background-size: 6px 6px;
+            background-position: 0 0, 3px 3px;
+            border: 3px inset #0a0807;
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.8);
+        }
+
+        .crt-screen-bezel {
+            background: #080808;
+            border: 10px solid #0f0a07;
+            box-shadow:
+                inset 0 20px 40px rgba(0, 0, 0, 0.95),
+                inset 0 0 15px rgba(0, 0, 0, 0.9);
+            border-radius: 2rem;
+        }
+
+        .crt-glass {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+        }
+
+        .crt-glass::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 40%, rgba(0,0,0,0.6) 100%);
+            pointer-events: none;
+            z-index: 25;
+        }
+
+        .scanlines {
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%,
+                rgba(0, 0, 0, 0.35) 50%
+            ), linear-gradient(
+                90deg,
+                rgba(255, 0, 0, 0.03),
+                rgba(0, 255, 0, 0.01),
+                rgba(0, 0, 255, 0.03)
+            );
+            background-size: 100% 3px, 6px 100%;
+            pointer-events: none;
+        }
+
+        @keyframes tv-noise {
+            0% { background-position: 0 0; }
+            20% { background-position: -30px -20px; }
+            40% { background-position: 20px 40px; }
+            60% { background-position: -10px -50px; }
+            80% { background-position: 40px 10px; }
+            100% { background-position: 0 0; }
+        }
+
+        .static-snow {
+            background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.5"/></svg>');
+            animation: tv-noise 0.15s steps(4) infinite;
+        }
+
+        .tactile-knob {
+            background: linear-gradient(145deg, #e6c280, #8c5820);
+            border: 4px solid #3b200b;
+            box-shadow:
+                0 6px 12px rgba(0,0,0,0.7),
+                inset 0 2px 4px rgba(255,255,255,0.4),
+                inset 0 -4px 6px rgba(0,0,0,0.6);
+            transition: transform 0.15s cubic-bezier(0.3, 1.5, 0.5, 1);
+            cursor: pointer;
+        }
+        .tactile-knob:active {
+            transform: scale(0.95);
+        }
+
+        .lime-text {
+            color: #ccff00;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <!-- Header -->
+    <header class="w-full max-w-5xl flex items-center justify-between border-b border-[#ccff00]/30 pb-4 mb-6">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-[#ccff00] text-black font-black flex items-center justify-center rounded chunky-font text-xl shadow-[0_0_15px_rgba(204,255,0,0.5)]">
+                2HG
+            </div>
+            <div>
+                <h1 class="chunky-font text-2xl sm:text-3xl tracking-wider text-white">TWO HEADED GIRL</h1>
+                <p class="text-xs lime-text mono-font tracking-widest uppercase">SHOCKING! Erotic and Exotic News</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main wood-grain TV console -->
+    <main class="w-full max-w-4xl wood-tv-cabinet p-6 sm:p-8 relative flex flex-col md:flex-row items-center gap-8 shadow-2xl">
+
+        <!-- TV screen -->
+        <div class="w-full md:w-[68%] aspect-[4/3] crt-screen-bezel flex items-center justify-center relative">
+            <div class="w-full h-full crt-glass relative flex items-center justify-center bg-black">
+
+                <!-- Static flash overlay -->
+                <div id="static-overlay" class="absolute inset-0 static-snow pointer-events-none" style="opacity: 0; transition: opacity 0.1s; z-index: 35;"></div>
+
+                <!-- Standby / GIF image -->
+                <img id="tv-image" src="https://images.squarespace-cdn.com/content/v1/6ac45e1cf0ed615dbaa139df/5e8617c5-5c9f-441b-856b-e249f6056aaa/thg-company-photo.png" alt="Two Headed Girl standby screen" class="w-full h-full object-cover block relative z-10">
+
+                <!-- YouTube player (created by script) -->
+                <div id="tv-player" class="absolute inset-0 z-10" style="display: none;"></div>
+
+                <!-- Scanlines -->
+                <div class="absolute inset-0 scanlines pointer-events-none z-30"></div>
+
+                <!-- On-screen channel badge -->
+                <div class="absolute top-4 left-4 bg-black/85 border border-[#ccff00]/70 lime-text px-3 py-1 mono-font text-xs tracking-widest z-40 shadow-xl flex items-center gap-2 rounded">
+                    <i class="fa-solid fa-satellite-dish"></i>
+                    <span id="osd-channel">STANDBY</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="w-full md:w-[32%] flex flex-col justify-between h-full min-h-[320px] gap-6">
+
+            <div class="w-full h-24 sm:h-32 speaker-grille rounded-lg flex flex-col items-center justify-center p-2">
+                <div class="w-12 h-1 bg-black/60 rounded-full my-1"></div>
+                <div class="w-12 h-1 bg-black/60 rounded-full my-1"></div>
+                <div class="w-12 h-1 bg-black/60 rounded-full my-1"></div>
+            </div>
+
+            <div class="bg-[#140a03] border border-[#3b200b] p-4 rounded-xl flex flex-col items-center gap-4 shadow-inner">
+                <div class="grid grid-cols-3 gap-3 w-full items-start justify-items-center">
+
+                    <!-- Power knob -->
+                    <div class="flex flex-col items-center gap-1.5">
+                        <span class="text-[8px] mono-font text-amber-200/60 uppercase tracking-widest">Power</span>
+                        <div id="power-knob" class="w-12 h-12 rounded-full tactile-knob relative flex items-center justify-center" title="Power on / off" role="button" tabindex="0" aria-pressed="false">
+                            <div id="power-led" class="w-1.5 h-1.5 rounded-full absolute top-1.5" style="background: #3b200b;"></div>
+                            <span class="text-[7px] mono-font text-amber-100 font-bold mt-2">PWR</span>
+                        </div>
+                    </div>
+
+                    <!-- Channel knob -->
+                    <div class="flex flex-col items-center gap-1.5">
+                        <span class="text-[8px] mono-font text-amber-200/60 uppercase tracking-widest">Channel</span>
+                        <div id="channel-knob" class="w-14 h-14 rounded-full tactile-knob relative flex items-center justify-center" title="Next channel" role="button" tabindex="0">
+                            <div class="w-1.5 h-5 bg-[#140a03] rounded-full absolute top-1 shadow-inner"></div>
+                            <div class="w-6 h-6 rounded-full bg-[#2b1708] border border-[#4a2511] flex items-center justify-center text-[8px] mono-font text-amber-100 font-bold">VHF</div>
+                        </div>
+                    </div>
+
+                    <!-- Volume knob -->
+                    <div class="flex flex-col items-center gap-1.5">
+                        <span class="text-[8px] mono-font text-amber-200/60 uppercase tracking-widest">Volume</span>
+                        <div id="volume-knob" class="w-12 h-12 rounded-full tactile-knob relative flex items-center justify-center" title="Toggle sound" role="button" tabindex="0">
+                            <div class="w-1.5 h-4 bg-[#140a03] rounded-full absolute top-1 shadow-inner"></div>
+                            <div class="w-5 h-5 rounded-full bg-[#2b1708] border border-[#4a2511] flex items-center justify-center text-[7px] mono-font text-amber-100">VOL</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="w-full bg-black border-2 border-[#3b200b] rounded p-2 text-center shadow-inner">
+                    <span class="text-[9px] mono-font text-gray-500 block uppercase">Selected frequency</span>
+                    <span id="channel-display" class="text-sm mono-font lime-text font-bold tracking-widest">OFF</span>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        // Mechanical click sound for the knobs
+        function playMechanicalClick() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(120, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.04);
+
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.04);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.04);
+            } catch (e) {
+                // Audio blocked until the first interaction
+            }
+        }
+
+        // Channel list.
+        // type "youtube": the video ID from the YouTube URL (the part after v= or after youtu.be/).
+        // type "gif": a local image file.
+        // IDs starting with REPLACE_ are placeholders until you fill them in.
+        const channels = [
+            { label: "CH 1 // GIRL TRASH",              type: "youtube", id: "RIZQfJk0s8Q" },
+            { label: "CH 2 // OUR FINGERS IN THE DIRT", type: "youtube", id: "fw-6TaWUaI8" },
+            { label: "CH 3 // 2022 MINI TOUR",          type: "youtube", id: "SxtgelMdN6s" },
+            { label: "CH 4 // ACID CAT",                type: "youtube", id: "aoI4noOVSKg" },
+            { label: "CH 5 // PLANETS",                 type: "gif",     url: "assets/tv-vids/planets.gif" },
+            { label: "CH 6 // BONUS",                   type: "youtube", id: "REPLACE_CH6_ID" }
+        ];
+
+        const tvImage = document.getElementById('tv-image');
+        const tvPlayer = document.getElementById('tv-player');
+        const STANDBY_SRC = tvImage.src;
+        const osdChannel = document.getElementById('osd-channel');
+        const channelDisplay = document.getElementById('channel-display');
+        const staticOverlay = document.getElementById('static-overlay');
+        const powerKnob = document.getElementById('power-knob');
+        const powerLed = document.getElementById('power-led');
+        const channelKnob = document.getElementById('channel-knob');
+        const volumeKnob = document.getElementById('volume-knob');
+
+        let powered = false;
+        let currentChannel = 0;
+        let knobAngle = 0;
+        let isMuted = true;
+        let switchTimer = null;
+        let player = null;   // the iframe element
+
+        function isPlaceholder(id) {
+            return !id || id.startsWith('REPLACE_');
+        }
+
+        function buildYouTubeSrc(id, muted) {
+            const params = new URLSearchParams({
+                autoplay: 1,
+                mute: muted ? 1 : 0,
+                controls: 0,
+                rel: 0,
+                modestbranding: 1,
+                playsinline: 1,
+                loop: 1,
+                playlist: id,
+                enablejsapi: 1
+            });
+            return `https://www.youtube-nocookie.com/embed/${id}?${params.toString()}`;
+        }
+
+        // Send a command to the YouTube player (mute, unmute)
+        function ytCommand(func) {
+            if (!player || !player.contentWindow) return;
+            player.contentWindow.postMessage(
+                JSON.stringify({ event: 'command', func: func, args: [] }),
+                '*'
+            );
+        }
+
+        function setLed(on) {
+            powerLed.style.background = on ? '#ccff00' : '#3b200b';
+            powerLed.style.boxShadow = on ? '0 0 6px #ccff00' : 'none';
+        }
+
+        function clearPlayer() {
+            tvPlayer.style.display = 'none';
+            tvPlayer.innerHTML = '';
+            player = null;
+        }
+
+        function showStandby() {
+            clearPlayer();
+            tvImage.src = STANDBY_SRC;
+            tvImage.style.display = 'block';
+            osdChannel.textContent = 'STANDBY';
+            channelDisplay.textContent = 'OFF';
+        }
+
+        function showGif(channel, index) {
+            clearPlayer();
+            tvImage.src = channel.url;
+            tvImage.style.display = 'block';
+            osdChannel.textContent = channel.label;
+            channelDisplay.textContent = `CHANNEL 0${index + 1}`;
+        }
+
+        function showYouTube(channel, index) {
+            tvImage.style.display = 'none';
+            osdChannel.textContent = channel.label;
+            channelDisplay.textContent = `CHANNEL 0${index + 1}`;
+
+            if (isPlaceholder(channel.id)) {
+                clearPlayer();
+                osdChannel.textContent = channel.label + ' // NOT SET UP';
+                return;
+            }
+
+            // Build a fresh iframe for each channel so the video restarts cleanly
+            tvPlayer.innerHTML = '';
+            const iframe = document.createElement('iframe');
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = '0';
+            iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+            iframe.title = channel.label;
+            iframe.src = buildYouTubeSrc(channel.id, isMuted);
+            tvPlayer.appendChild(iframe);
+            tvPlayer.style.display = 'block';
+            player = iframe;
+        }
+
+        function powerOn() {
+            playMechanicalClick();
+            powered = true;
+            powerKnob.setAttribute('aria-pressed', 'true');
+            setLed(true);
+            isMuted = false;
+            volumeKnob.style.transform = 'rotate(45deg)';
+            switchChannel(0);
+        }
+
+        function powerOff() {
+            playMechanicalClick();
+            powered = false;
+            clearTimeout(switchTimer);
+            powerKnob.setAttribute('aria-pressed', 'false');
+            setLed(false);
+            staticOverlay.style.opacity = '0';
+            showStandby();
+        }
+
+        function togglePower() {
+            powered ? powerOff() : powerOn();
+        }
+
+        function nextChannel() {
+            if (!powered) return powerOn();
+            playMechanicalClick();
+            switchChannel((currentChannel + 1) % channels.length);
+        }
+
+        function toggleSound() {
+            playMechanicalClick();
+            isMuted = !isMuted;
+            ytCommand(isMuted ? 'mute' : 'unMute');
+            volumeKnob.style.transform = `rotate(${isMuted ? 0 : 45}deg)`;
+        }
+
+        function switchChannel(index) {
+            currentChannel = index;
+            const channel = channels[index];
+
+            knobAngle += 60;
+            channelKnob.style.transform = `rotate(${knobAngle}deg)`;
+
+            staticOverlay.style.opacity = '1';
+            clearTimeout(switchTimer);
+
+            switchTimer = setTimeout(() => {
+                if (!powered) return;
+
+                if (channel.type === 'gif') {
+                    showGif(channel, index);
+                } else {
+                    showYouTube(channel, index);
+                }
+
+                setTimeout(() => {
+                    staticOverlay.style.opacity = '0';
+                }, 150);
+            }, 180);
+        }
+
+        // Show a readable message if YouTube reports a problem with a video
+        window.addEventListener('message', (event) => {
+            if (!event.origin.includes('youtube')) return;
+            let data;
+            try { data = JSON.parse(event.data); } catch (e) { return; }
+            if (data && data.event === 'onError' && powered) {
+                const reasons = {
+                    2: 'bad video ID',
+                    5: 'HTML5 player error',
+                    100: 'video removed or private',
+                    101: 'embedding disabled by owner',
+                    150: 'embedding disabled by owner'
+                };
+                const reason = reasons[data.info] || ('error ' + data.info);
+                osdChannel.textContent = channels[currentChannel].label + ' // NO SIGNAL (' + reason + ')';
+                console.warn('YouTube error on', channels[currentChannel].id, reason);
+            }
+        });
+
+        // Wire up the knobs (click and keyboard)
+        function bindKnob(el, handler) {
+            el.addEventListener('click', handler);
+            el.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handler();
+                }
+            });
+        }
+
+        bindKnob(powerKnob, togglePower);
+        bindKnob(channelKnob, nextChannel);
+        bindKnob(volumeKnob, toggleSound);
+
+        // Start on the standby picture
+        showStandby();
+    </script>
+</body>
+</html>
