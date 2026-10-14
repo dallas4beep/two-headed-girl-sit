@@ -3,138 +3,410 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Motocross</title>
+<title>Two Headed Girl · Community Strap Motocross</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-body{
-    margin: 0;
-    font-family: monospace;
-    font-size: 1.25em;
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 14px 24px;
+    background: radial-gradient(circle at 50% 0%, #4a2270 0%, #1d1640 60%, #120a24 100%);
+    color: #ffe3f1;
+    font-family: 'Space Mono', monospace;
   }
-html, body { background: #19f; }
-canvas { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 14px; }
+  h1 {
+    font-family: 'Bungee', cursive;
+    font-weight: 400;
+    font-size: clamp(22px, 5vw, 38px);
+    margin: 0;
+    color: #ff8fc7;
+    text-shadow: 3px 3px 0 #1d1640, 6px 6px 0 #6a2f85;
+    letter-spacing: 1px;
+  }
+  .sub {
+    margin: 10px 0 0;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #cdb6ff;
+  }
+  #stage {
+    position: relative;
+    width: min(100%, 720px);
+    border: 4px solid #ff8fc7;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #1d1640;
+    box-shadow: 0 0 0 4px #1d1640, 0 14px 40px rgba(255, 143, 199, 0.35);
+  }
+  #stage canvas { display: block; width: 100%; height: auto; }
+  #hud {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    pointer-events: none;
+  }
+  #hud span {
+    font-family: 'Bungee', cursive;
+    font-size: 12px;
+    color: #fff7fb;
+    background: rgba(29, 22, 64, 0.75);
+    border: 2px solid #ff8fc7;
+    padding: 5px 12px;
+    border-radius: 999px;
+  }
+  footer {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  footer span {
+    background: #ff8fc7;
+    color: #1d1640;
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 12px;
+    box-shadow: 3px 3px 0 #6a2f85;
+  }
+  .note {
+    margin-top: 14px;
+    font-size: 12px;
+    color: #cdb6ff;
+    text-align: center;
+    max-width: 460px;
+  }
 </style>
 </head>
 <body>
+<header>
+  <h1>TWO HEADED GIRL</h1>
+  <p class="sub">community strap · motocross ✦</p>
+</header>
+
+<div id="stage">
+  <div id="hud">
+    <span id="trash">GIRL TRASH 0</span>
+    <span id="dist">DISTANCE 0 m</span>
+  </div>
+</div>
+
+<footer>
+  <span>↑ ↓ accelerate</span>
+  <span>← → rotate</span>
+</footer>
+<p class="note">pick up the girl trash along the way. don't crash.</p>
+
 <script>
 var MOTO_IMG = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAXCAYAAAD+4+QTAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4xOdTWsmQAAALfSURBVEhLrVVLaBRBEN2NoqirB1Hw4MGD+ImHYNQQdme2IdMz09s9CfgZD56CQREPgmJAEFn1JniSIIIaPHjRg168CYoEQYwa/AYvXvwgRhEFxQ9ZfdXTO3F3Zpc1yYNH73ZVvaqu/kymGdrDcB6Nlls6ZHE5brtquNvzlmrjbMHmwT6IX4b4n5hc3YMpG3nMEMzrXQ3RqzUJIlaKjtho3KYP25UDWMHP+gSWq0a7hFgyKy2D4Gh9AiK1zrjMDIwFy9D3L7GwK9+AD6Pf6gXGY/m+vsXGfXqwuTwVJ+DyIiXFdLbgqq1I/gDzFV0EV2MFT3VEUf8JiDyPkshfYD9jLGdMGkzKFbC/jIpQdywhlhtT60BLbkRJ4nZ9xni8u3vHAuOSKXK5EwU8NvbTZrp1MBbm0KajCJ6oScbVXZj1/Sg6wRbbkQp+r7TNKwU03wxZ9HY3XTwE77IcKWw/6LSc0hokOog9ehYncuV+/L9Ge4IEk0j8w8zfpziscJvdE3SWy+U2oz0FIcR8xkubbU8eqQpqkpArP9bMNaBOxOUQHRa0coRaauRr4bruIuzJ7zSRRoToU4wVOiRGhpCtvnupQAvO1Qs1Y546gBaiuNebgmChkWmINuYF62xPddlu4GH5B1DdMIRQZXoC+Ewgjva0A/8rSHQFK7uE8bztlLaTTSsTir6y4aTPviZXnyxP7SUbEg3E8wnKm+RD7xk68C5h5+o67tncTMHv3YDlfks4gFQZ3eyEjcvvWMV7CA+ZQs4mfKrk8jD2oO57kWTULi6/IuEHCN7G6NPNpzaFYThH25Jxmij0CT0jU21KI849juP6Rt8QeixT46pEYfSMPEo1aspJ6rfRa4Qs/N6mxxPlCK3kRNIQ85YRagoIDabEatIrgLeK5VJXQyesR7QbnebAMwL/M4j757jTl1UOGo/4UTwJxzGM4zg1F5jvrzLmlpH3/bWI3QPxfibEymg2k/kLGmgFj+yZMV8AAAAASUVORK5CYII";
 
+var stage = document.getElementById("stage");
+var trashHud = document.getElementById("trash");
+var distHud = document.getElementById("dist");
 var c = document.createElement("canvas");
 var ctx = c.getContext("2d");
-c.width = 720; 
+c.width = 720;
 c.height = 480;
-document.body.appendChild(c);
+stage.insertBefore(c, stage.firstChild);
 
 var perm = [];
-while (perm.length < 255){
-    while(perm.includes(val = Math.floor(Math.random()*255)));
-    perm.push(val);
+while (perm.length < 255) {
+  var val;
+  while (perm.includes(val = Math.floor(Math.random() * 255)));
+  perm.push(val);
 }
 
-var lerp = (a,b,t) => a + (b-a) * (1-Math.cos(t*Math.PI))/2;
-var noise = x=>{
-    x = x * 0.01 % 254;
-    return lerp(perm[Math.floor(x)], perm[Math.ceil(x)], x - Math.floor(x));
+var lerp = (a, b, t) => a + (b - a) * (1 - Math.cos(t * Math.PI)) / 2;
+var noise = x => {
+  x = x * 0.01 % 254;
+  return lerp(perm[Math.floor(x)], perm[Math.ceil(x)], x - Math.floor(x));
+};
+var wrap = (v, m) => ((v % m) + m) % m;
+
+// scenery
+var frame = 0;
+var stars = [];
+for (var s = 0; s < 45; s++) {
+  stars.push({
+    x: Math.random() * c.width,
+    y: Math.random() * c.height * 0.6,
+    r: Math.random() * 1.4 + 0.5,
+    p: Math.random() * 6
+  });
+}
+var clouds = [
+  { x: 40,  y: 70,  s: 1.0 },
+  { x: 300, y: 120, s: 0.8 },
+  { x: 520, y: 52,  s: 1.1 },
+  { x: 680, y: 150, s: 0.7 }
+];
+
+// girl trash pickups, placed in world coordinates (world = t + screen x)
+var trashItems = [];
+for (var n = 0; n < 150; n++) {
+  trashItems.push({
+    w: 500 + n * 230 + Math.random() * 90,
+    taken: false,
+    p: Math.random() * 6
+  });
+}
+var collected = 0;
+
+function drawSky() {
+  var g = ctx.createLinearGradient(0, 0, 0, c.height);
+  g.addColorStop(0, "#1d1640");
+  g.addColorStop(0.55, "#6a2f85");
+  g.addColorStop(1, "#ff7fb8");
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, c.width, c.height);
 }
 
-var Player =  function(){
-    this.x = c.width/2;
-    this.y = 0;
-    this.ySpeed = 0;
-    this.rot = 0;
-    this.rSpeed = 0;
-    this.img = new Image();
-    this.img.src = MOTO_IMG;
-    this.draw = function(){
-        var p1 =  c.height - noise(t + this.x) * 0.25;
-        var p2 =  c.height - noise(t+5 + this.x) * 0.25;
+function drawStars() {
+  ctx.fillStyle = "#fff7fb";
+  stars.forEach(st => {
+    ctx.globalAlpha = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(frame * 0.05 + st.p));
+    ctx.beginPath();
+    ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+}
 
-        var grounded = 0;
-        if(p1-12 > this.y){
-            this.ySpeed += 0.1;
-        }else{
-            this.ySpeed -= this.y - (p1-12);
-            this.y = p1 - 12;
-            grounded = 1;
-        }
+function drawSun() {
+  var x = 560, y = 230, r = 62;
+  var glow = ctx.createRadialGradient(x, y, r * 0.6, x, y, r * 2.2);
+  glow.addColorStop(0, "rgba(255, 209, 232, 0.55)");
+  glow.addColorStop(1, "rgba(255, 209, 232, 0)");
+  ctx.fillStyle = glow;
+  ctx.beginPath();
+  ctx.arc(x, y, r * 2.2, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = "#ffd1e8";
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
+}
 
-        var angle = Math.atan2((p2-12) - this.y, (this.x+5) - this.x);
-        this.y += this.ySpeed;
+function drawCloud(x, y, sc) {
+  ctx.fillStyle = "rgba(255, 240, 250, 0.92)";
+  ctx.beginPath();
+  ctx.arc(x, y, 22 * sc, 0, Math.PI * 2);
+  ctx.arc(x + 26 * sc, y - 10 * sc, 28 * sc, 0, Math.PI * 2);
+  ctx.arc(x + 56 * sc, y, 22 * sc, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillRect(x, y, 56 * sc, 22 * sc);
+}
 
-        if(!playing || grounded && Math.abs(this.rot) > Math.PI * 0.5){
-            playing = false;
-            this.rSpeed = 5;
-            k.ArrowUp = 1;
-            this.x -= speed * 5;
-        }
+function drawClouds() {
+  clouds.forEach(cl => {
+    var x = wrap(cl.x - t * 0.2 * cl.s, c.width + 200) - 100;
+    drawCloud(x, cl.y, cl.s);
+  });
+}
 
-        
-        if(grounded && playing){
-            this.rot -= (this.rot - angle) * 0.65;
-            this.rSpeed = this.rSpeed - (angle - this.rot);
-        }
-        this.rSpeed += (k.ArrowLeft - k.ArrowRight) * 0.05;
-        this.rot -= this.rSpeed * 0.1;
-        if(this.rot > Math.PI) this.rot = -Math.PI;
-        if(this.rot < -Math.PI) this.rot = Math.PI;
-        ctx.save();
-        ctx.translate(this.x, this.y - 3);
-        ctx.rotate(this.rot);
-        ctx.drawImage(this.img, -15, -15, 30, 30);
-        ctx.restore();
+function hill(yFn, color) {
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(0, c.height);
+  for (var i = 0; i < c.width; i++) ctx.lineTo(i, yFn(i));
+  ctx.lineTo(c.width, c.height);
+  ctx.fill();
+}
+
+// girl trash bag: a plum sack with a pink tie and a little sparkle
+function drawTrash(x, y, p) {
+  var bob = Math.sin(frame * 0.08 + p) * 2;
+  var by = y + bob;
+  ctx.fillStyle = "#1d1640";
+  ctx.strokeStyle = "#ff8fc7";
+  ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  ctx.moveTo(x - 6, by - 8);
+  ctx.quadraticCurveTo(x - 15, by + 2, x - 11, by + 12);
+  ctx.quadraticCurveTo(x, by + 18, x + 11, by + 12);
+  ctx.quadraticCurveTo(x + 15, by + 2, x + 6, by - 8);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  // pink tie
+  ctx.fillStyle = "#ff8fc7";
+  ctx.beginPath(); ctx.arc(x - 4, by - 9, 3, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(x + 4, by - 9, 3, 0, Math.PI * 2); ctx.fill();
+  ctx.beginPath(); ctx.arc(x, by - 8, 2, 0, Math.PI * 2); ctx.fill();
+  // sparkle
+  var a = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(frame * 0.1 + p));
+  ctx.fillStyle = "rgba(255, 247, 251, " + a + ")";
+  ctx.beginPath(); ctx.arc(x + 14, by - 12, 1.8, 0, Math.PI * 2); ctx.fill();
+}
+
+function updateTrash() {
+  var last = trashItems[trashItems.length - 1];
+  while (last.w < t + player.x + 1200) {
+    last = { w: last.w + 230 + Math.random() * 90, taken: false, p: Math.random() * 6 };
+    trashItems.push(last);
+  }
+  for (var i = 0; i < trashItems.length; i++) {
+    var it = trashItems[i];
+    if (it.taken) continue;
+    var sx = it.w - t;
+    if (sx < -30 || sx > c.width + 30) continue;
+    var sy = c.height - noise(it.w) * 0.25 - 14;
+    if (Math.abs(sx - player.x) < 20 && Math.abs(sy - player.y) < 26) {
+      it.taken = true;
+      collected++;
     }
+  }
 }
+
+function drawTrashItems() {
+  for (var i = 0; i < trashItems.length; i++) {
+    var it = trashItems[i];
+    if (it.taken) continue;
+    var sx = it.w - t;
+    if (sx < -30 || sx > c.width + 30) continue;
+    var sy = c.height - noise(it.w) * 0.25 - 14;
+    drawTrash(sx, sy, it.p);
+  }
+}
+
+// physics (unchanged from the original game)
+var Player = function () {
+  this.x = c.width / 2;
+  this.y = 0;
+  this.ySpeed = 0;
+  this.rot = 0;
+  this.rSpeed = 0;
+  this.img = new Image();
+  this.img.src = MOTO_IMG;
+  this.draw = function () {
+    var p1 = c.height - noise(t + this.x) * 0.25;
+    var p2 = c.height - noise(t + 5 + this.x) * 0.25;
+
+    var grounded = 0;
+    if (p1 - 12 > this.y) {
+      this.ySpeed += 0.1;
+    } else {
+      this.ySpeed -= this.y - (p1 - 12);
+      this.y = p1 - 12;
+      grounded = 1;
+    }
+
+    var angle = Math.atan2((p2 - 12) - this.y, (this.x + 5) - this.x);
+    this.y += this.ySpeed;
+
+    if (!playing || grounded && Math.abs(this.rot) > Math.PI * 0.5) {
+      playing = false;
+      this.rSpeed = 5;
+      k.ArrowUp = 1;
+      this.x -= speed * 5;
+    }
+
+    if (grounded && playing) {
+      this.rot -= (this.rot - angle) * 0.65;
+      this.rSpeed = this.rSpeed - (angle - this.rot);
+    }
+    this.rSpeed += (k.ArrowLeft - k.ArrowRight) * 0.05;
+    this.rot -= this.rSpeed * 0.1;
+    if (this.rot > Math.PI) this.rot = -Math.PI;
+    if (this.rot < -Math.PI) this.rot = Math.PI;
+
+    // pink exhaust sparkles when moving forward
+    if (speed > 0.5 && playing) {
+      ctx.fillStyle = "rgba(255, 143, 199, 0.85)";
+      for (var j = 0; j < 2; j++) {
+        ctx.beginPath();
+        ctx.arc(this.x - 18 - Math.random() * 10, this.y + 4 + Math.random() * 6, 2 + Math.random() * 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // shadow under the rider
+    ctx.fillStyle = "rgba(20, 8, 36, 0.35)";
+    ctx.beginPath();
+    ctx.ellipse(this.x, this.y + 13, 12, 3, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.save();
+    ctx.translate(this.x, this.y - 3);
+    ctx.rotate(this.rot);
+    ctx.drawImage(this.img, -15, -15, 30, 30);
+    ctx.restore();
+  };
+};
 
 var player = new Player();
 var t = 0;
 var speed = 0;
 var playing = true;
-var k = {ArrowUp:0, ArrowDown:0, ArrowLeft:0, ArrowRight:0};
-function loop(){
-    speed -= (speed - (k.ArrowUp - k.ArrowDown)) * 0.01;
-    t += 10 * speed;
-    ctx.fillStyle = "#19f";
-    ctx.fillRect(0,0,c.width, c.height);
+var distance = 0;
+var crashTimer = 0;
+var k = { ArrowUp: 0, ArrowDown: 0, ArrowLeft: 0, ArrowRight: 0 };
 
-    ctx.fillStyle = "rgba(0,0,0,0.25)";
-    ctx.beginPath();
-    ctx.moveTo(0, c.height);
-    for (let i = 0; i < c.width; i++)
-        ctx.lineTo(i, c.height*0.8 - noise(t + i*5) * 0.25);
-    ctx.lineTo(c.width, c.height);
-    ctx.fill();
+function loop() {
+  frame++;
+  // camera follows the rider: ease the bike back toward the middle of the screen,
+  // shifting the world by the same amount so terrain and pickups stay put
+  var cam = (c.width / 2 - player.x) * 0.1;
+  player.x += cam;
+  t -= cam;
+  speed -= (speed - (k.ArrowUp - k.ArrowDown)) * 0.01;
+  t += 10 * speed;
+  // a crash ends the run only after the bike has had time to slide to a stop
+  if (!playing) {
+    crashTimer++;
+    if (crashTimer > 120) respawn();
+  } else {
+    crashTimer = 0;
+  }
+  if (speed > 0) distance += speed * 0.5;
+  updateTrash();
+  trashHud.textContent = "GIRL TRASH " + collected;
+  distHud.textContent = "DISTANCE " + Math.floor(distance) + " m";
 
-    ctx.fillStyle = "#444";
-    ctx.beginPath();
-    ctx.moveTo(0, c.height);
-    for (let i = 0; i < c.width; i++)
-        ctx.lineTo(i, c.height - noise(t + i) * 0.25);
-    ctx.lineTo(c.width, c.height);
-    ctx.fill();
+  drawSky();
+  drawStars();
+  drawSun();
+  drawClouds();
+  hill(i => c.height * 0.8 - noise(t + i * 5) * 0.25, "#c2559a");
+  hill(i => c.height - noise(t + i) * 0.25, "#3b1d4f");
+  drawTrashItems();
+  player.draw();
 
-    player.draw();
-    if(player.x < 0)
-        restart();
-    requestAnimationFrame(loop);
+  requestAnimationFrame(loop);
 }
 
-onkeydown = d=> k[d.key] = 1;
-onkeyup = d=> k[d.key] = 0;
+var arrows = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+onkeydown = d => {
+  if (arrows.includes(d.key)) d.preventDefault();
+  k[d.key] = 1;
+};
+onkeyup = d => { k[d.key] = 0; };
 
-function restart(){
-    
-    player = new Player();
-    t = 0;
-    speed = 0;
-    playing = true;
-    k = {ArrowUp:0, ArrowDown:0, ArrowLeft:0, ArrowRight:0};
-
+function respawn() {
+  // the rider gets back on the bike upright, right where they fell
+  player.rot = 0;
+  player.rSpeed = 0;
+  player.ySpeed = 0;
+  playing = true;
+  crashTimer = 0;
 }
+
 loop();
-
-var instructions = document.createElement("div");
-instructions.innerHTML += "[Up] [Down] = Accelerate <br> [Left] [Right] = Rotate";
-document.body.appendChild(instructions);
-
 </script>
 </body>
 </html>
