@@ -29,3 +29,18 @@ assets/tv-vids/*.gif
 check-files.html
 video-test.html
 tv-originals/
+
+cat >> .gitignore << 'EOF'
+
+# Duplicate test folder
+tv element/
+
+# Large media (too big for GitHub)
+assets/vids/Girl trash.mp4
+assets/vids/thg_banner_vid.mp4
+assets/vids/thg-banner-vid.mp4
+assets/vids/2HG-VIDEO-OURFINGERSINTHEDIRT.mp4
+assets/vids/2HG-VIDEO-2022MINITOUR.mp4
+assets/vids/GAME-COVER- ESCAPE-THE-STRAP-ROOMS .gif
+assets/vids/GT- PHONE CONVO ANIMATON.gif
+EOF
