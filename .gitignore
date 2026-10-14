@@ -20,6 +20,11 @@ assets/tv-vids/*.avi
 assets/tv-vids/*.gif
 !assets/tv-vids/planets.gif
 
+   assets/vids/*.mp4
+   assets/vids/*.mov
+   assets/vids/GAME-COVER*.gif
+   assets/vids/GT-*.gif
+
 # Local checks and backups
 check-files.html
 video-test.html
