@@ -54,7 +54,17 @@
       cursor: pointer;
     }
     .contact-form button:disabled { opacity: .5; cursor: wait; }
-    .contact-form .status {
+    .thanks-box {
+      display: none;
+      border: 1px solid #ccff00;
+      padding: 1.25rem 1.5rem;
+      color: #ccff00;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .95rem;
+      letter-spacing: .05em;
+    }
+    .thanks-box.is-visible { display: block; }
+    .contact-status {
       font-size: .8rem;
       color: #ccff00;
       min-height: 1.2em;
@@ -99,15 +109,23 @@
         <h2 class="section__title" id="contact-form-heading">Send a <em>message</em></h2>
       </div>
 
-      <form class="contact-form" id="contact-form" novalidate>
+      <form
+        class="contact-form"
+        id="contact-form"
+        action="https://docs.google.com/forms/d/e/1FAIpQLSfBxZhg1vrnu8xS8MPHVSUsyFoVueaoy3l_92rtws6Q66L69w/formResponse"
+        method="POST"
+        novalidate>
+
         <div class="field">
           <label for="c-name">Name</label>
           <input id="c-name" name="entry.43044082" type="text" placeholder="Your name" required />
         </div>
+
         <div class="field">
           <label for="c-email">Email</label>
           <input id="c-email" name="entry.1222529608" type="email" placeholder="you@signal.fm" required />
         </div>
+
         <div class="field">
           <label for="c-topic">What is this about?</label>
           <select id="c-topic" name="entry.111672678" required>
@@ -116,12 +134,18 @@
             <option>Other</option>
           </select>
         </div>
+
         <div class="field">
           <label for="c-msg">Message</label>
           <textarea id="c-msg" name="entry.1791439522" placeholder="WE WILL GET BACK TO YOU SOON." required></textarea>
         </div>
-        <button type="submit">Transmit message →</button>
-        <p class="status" id="c-status" role="status" aria-live="polite"></p>
+
+        <button type="submit" id="c-submit">Transmit message →</button>
+        <p class="contact-status" id="c-status" role="status" aria-live="polite"></p>
+
+        <div class="thanks-box" id="c-thanks" role="status" aria-live="polite">
+          Thx! Your message was sent. We will get back to you soon.
+        </div>
       </form>
     </section>
 
@@ -133,4 +157,70 @@
         <p class="foot__brand">TWO HEADED GIRL</p>
         <p class="foot__about">Two Headed Girl is a queer punk-pop band made up of identical twins Angie and Celeste.</p>
       </div>
-      <div
+      <div class="foot__col">
+        <h4>Catalogue</h4>
+        <ul>
+          <li><a href="releases.html">All releases</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h4>The band</h4>
+        <ul>
+          <li><a href="artists.html">Artists</a></li>
+          <li><a href="shows.html">Live shows</a></li>
+          <li><a href="contact.html">Contact &amp; booking</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h4>Follow</h4>
+        <ul>
+          <li><a href="https://www.instagram.com/twoheadedgirlforever/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li><a href="https://www.tiktok.com/@twoheadedgirlband" target="_blank" rel="noopener noreferrer">TikTok</a></li>
+          <li><a href="https://x.com/twoheadedoffici" target="_blank" rel="noopener noreferrer">X</a></li>
+          <li><a href="https://www.youtube.com/@Catscradle12" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot__btm">
+      <span>© <span data-year>2026</span> TWO HEADED GIRL</span>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    (function () {
+      var form = document.getElementById('contact-form');
+      var submitBtn = document.getElementById('c-submit');
+      var status = document.getElementById('c-status');
+      var thanks = document.getElementById('c-thanks');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!form.reportValidity()) return;
+
+        submitBtn.disabled = true;
+        status.textContent = 'Sending...';
+        thanks.classList.remove('is-visible');
+
+        
+        fetch(form.action, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: new URLSearchParams(new FormData(form))
+        })
+          .then(function () {
+            form.reset();
+            status.textContent = '';
+            thanks.classList.add('is-visible');
+          })
+          .catch(function () {
+            status.textContent = 'Network error. Please try again.';
+          })
+          .finally(function () {
+            submitBtn.disabled = false;
+          });
+      });
+    })();
+  </script>
+</body>
+</html>
