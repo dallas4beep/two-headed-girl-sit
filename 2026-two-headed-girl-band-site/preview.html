@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Two Headed Girl</title>
+  <meta name="description" content="Two Headed Girl: indie-pop hooks and punk-rock fire. The ultimate Queercore soundtrack for contemporary life." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Khula:wght@700&family=Rubik+Wet+Paint&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+:root {
+  --black: #050505;
+  --white: #ffffff;
+  --lime: #ccff00;
+  --violet: #c384ff;
+  --yellow: #deed04;
+  --muted: #8a8a8a;
+  --display: "Anton", Impact, sans-serif;
+  --body: "Space Grotesk", Arial, sans-serif;
+  --mono: "Space Mono", monospace;
+}
+
+* { box-sizing: border-box; }
+
+/* Make the hidden attribute win over display rules set on img and video. */
+[hidden] { display: none !important; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--body);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a { color: var(--lime); }
+
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 5%;
+  border-bottom: 1px solid rgba(204, 255, 0, 0.3);
+}
+
+.brand { display: flex; align-items: center; gap: 0.75rem; }
+.brand__badge {
+  background: var(--lime);
+  color: #000;
+  font-family: var(--display);
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+}
+.brand__name { margin: 0; font-family: var(--display); font-size: 1.5rem; letter-spacing: 0.05em; }
+.brand__tag { margin: 0; font-family: var(--mono); font-size: 0.7rem; color: var(--lime); text-transform: uppercase; letter-spacing: 0.1em; }
+
+.topbar nav { display: flex; flex-wrap: wrap; gap: 1rem; font-family: var(--mono); font-size: 0.85rem; }
+.topbar nav a { text-decoration: none; text-transform: uppercase; }
+.topbar nav a:hover { text-decoration: underline; }
+
+main { padding: 0 5%; max-width: 1200px; margin: 0 auto; }
+
+/* Hero */
+.hero { text-align: center; padding: 3rem 0 2rem; }
+.hero__title {
+  font-family: var(--display);
+  font-size: clamp(3.5rem, 13vw, 10rem);
+  line-height: 0.9;
+  margin: 1.5rem 0;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.hero__line { font-family: var(--display); font-size: clamp(1.25rem, 3vw, 2rem); color: var(--violet); margin: 0; }
+
+.marquee { overflow: hidden; white-space: nowrap; border-top: 1px solid rgba(255,255,255,0.15); border-bottom: 1px solid rgba(255,255,255,0.15); padding: 0.5rem 0; }
+.marquee__track { display: inline-flex; gap: 3rem; animation: scroll 24s linear infinite; font-family: var(--display); font-size: clamp(1.5rem, 4vw, 3rem); color: var(--lime); }
+.marquee--reverse .marquee__track { animation-direction: reverse; color: var(--violet); }
+@keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-33.33%); } }
+
+/* Sections */
+.section { padding: 3rem 0; border-top: 1px solid rgba(255,255,255,0.1); }
+.section__title { font-family: var(--display); font-size: clamp(2rem, 5vw, 3.5rem); text-transform: uppercase; margin: 0 0 1.25rem; }
+.section__title span { color: var(--lime); }
+
+/* TV */
+.tv { display: grid; gap: 1.5rem; grid-template-columns: 1fr; max-width: 800px; }
+.tv__screen {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: #000;
+  border: 10px solid #140a03;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+.tv__screen img, .tv__screen video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tv__osd {
+  position: absolute; top: 1rem; left: 1rem;
+  background: rgba(0,0,0,0.85);
+  border: 1px solid rgba(204,255,0,0.7);
+  color: var(--lime);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+}
+.tv__screen.is-static::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,0.08) 0 2px, transparent 2px 4px);
+  pointer-events: none;
+}
+.tv__controls { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.knob {
+  font-family: var(--mono);
+  background: linear-gradient(145deg, #e6c280, #8c5820);
+  color: #000;
+  border: 3px solid #3b200b;
+  border-radius: 999px;
+  padding: 0.75rem 1.25rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+.knob:focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; }
+.tv__readout { margin: 0; font-family: var(--mono); color: var(--lime); letter-spacing: 0.1em; }
+
+/* Bio */
+.bio { max-width: 800px; font-size: 1.15rem; }
+.muted { color: var(--muted); }
+
+/* Album */
+.album__eq {
+  font-family: "Rubik Wet Paint", "Courier New", monospace;
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: var(--white);
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+}
+.album__eq span { display: inline-block; color: var(--yellow); }
+
+/* Footer */
+.foot {
+  margin-top: 3rem;
+  padding: 2rem 5%;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.foot__links { display: flex; gap: 1rem; }
+.foot__links a { color: var(--lime); text-decoration: none; font-weight: 700; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+}
+
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand__badge">2HG</span>
+      <div>
+        <p class="brand__name">Two Headed Girl</p>
+        <p class="brand__tag">Shocking! Erotic and Exotic News</p>
+      </div>
+    </div>
+    <nav aria-label="Primary">
+      <a href="#tv">Watch</a>
+      <a href="#about">About</a>
+      <a href="#album">Album</a>
+      <a href="#shows">Shows</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track"><span>TWO HEADED GIRL IS SO SEXY</span><span>TWO HEADED GIRL IS SO SEXY</span><span>TWO HEADED GIRL IS SO SEXY</span></div>
+      </div>
+      <h1 id="hero-title" class="hero__title">Two Headed<br />Girl</h1>
+      <p class="hero__line">It's almost scary.</p>
+      <div class="marquee marquee--reverse" aria-hidden="true">
+        <div class="marquee__track"><span>🇵🇷 WEPA 🇵🇷</span><span>🇵🇷 WEPA 🇵🇷</span><span>🇵🇷 WEPA 🇵🇷</span></div>
+      </div>
+    </section>
+
+    <section id="tv" class="section" aria-labelledby="tv-heading">
+      <h2 id="tv-heading" class="section__title">Channel <span>surf</span></h2>
+      <div class="tv">
+        <div class="tv__screen">
+          <img id="tv-image" src="https://images.squarespace-cdn.com/content/v1/6ac45e1cf0ed615dbaa139df/5e8617c5-5c9f-441b-856b-e249f6056aaa/thg-company-photo.png" alt="Two Headed Girl band photo" />
+          <video id="tv-video" muted autoplay loop playsinline hidden></video>
+          <span class="tv__osd" id="osd">CH 1 // PUÑETA</span>
+        </div>
+        <div class="tv__controls">
+          <button id="next-channel" class="knob" type="button">Next channel</button>
+          <p class="tv__readout" id="readout">CHANNEL 01</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section" aria-labelledby="about-heading">
+      <h2 id="about-heading" class="section__title">About</h2>
+      <p class="bio">
+        Have you ever seen these lesbian twins? Have you ever loved a nation as much as they love Puerto Rico? Probably not, but you're still invited to the party. Fusing indie-pop hooks with punk-rock fire, THG crafts the ultimate Queercore soundtrack for contemporary life. Their unique sonic DNA blends the alt-rock grit of The Breeders with the feel-good energy of a band from The O.C. soundtrack, transforming their deep love for community into anthems. Driven by a contagious live presence that guarantees a high-energy room, THG will have your crowd shouting 🇵🇷 WEPA 🇵🇷 and dancing until sunrise.
+      </p>
+    </section>
+
+    <section id="album" class="section section--album" aria-labelledby="album-heading">
+      <h2 id="album-heading" class="section__title">New album</h2>
+      <p class="album__eq" role="img" aria-label="New album coming soon">
+        <span>NEW</span> <span>ALBUM</span> <span>COMING</span> <span>SOON</span>
+      </p>
+      <!-- TODO: add release details and streaming links when the album is announced. -->
+    </section>
+
+    <section id="shows" class="section" aria-labelledby="shows-heading">
+      <h2 id="shows-heading" class="section__title">Shows</h2>
+      <p class="muted">No dates announced yet. <!-- TODO: add upcoming dates, or remove this section. --></p>
+    </section>
+
+    <section id="contact" class="section" aria-labelledby="contact-heading">
+      <h2 id="contact-heading" class="section__title">Contact</h2>
+      <p class="muted">Bookings and press: <!-- TODO: add email address. --></p>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <p>&copy; <span id="year">2026</span> Two Headed Girl. All rights reserved.</p>
+    <div class="foot__links">
+      <!-- TODO: replace # with real Instagram, TikTok, and X/Twitter URLs. -->
+      <a href="#">Instagram</a>
+      <a href="#">TikTok</a>
+      <a href="#">Twitter</a>
+    </div>
+  </footer>
+
+  <script>
+(function () {
+  "use strict";
+
+  var year = document.getElementById("year");
+  if (year) year.textContent = new Date().getFullYear();
+
+  var img = document.getElementById("tv-image");
+  var video = document.getElementById("tv-video");
+  var osd = document.getElementById("osd");
+  var readout = document.getElementById("readout");
+  var screen = document.querySelector(".tv__screen");
+  var button = document.getElementById("next-channel");
+  if (!img || !video || !button) return;
+
+  var channels = [
+    { label: "CH 1 // PUÑETA", url: "https://video.squarespace-cdn.com/content/v1/6ac45e1cf0ed615dbaa139df/861453b4-963a-4ab2-851b-75735e95323f/1920w", type: "video" },
+    { label: "CH 2 // WOLF",   url: "https://video.squarespace-cdn.com/content/v1/6ac45e1cf0ed615dbaa139df/f0362fa2-e6d0-4b5d-8bec-7d3d6584c88c/1920w", type: "video" },
+    { label: "CH 3 // WEPA",   url: "https://video.squarespace-cdn.com/content/v1/6ac45e1cf0ed615dbaa139df/509e9ec0-ecff-4f2c-be26-571c0f21d524/1920w", type: "video" },
+    { label: "CH 4 // LIVE",   url: "https://video.squarespace-cdn.com/content/v1/6ac45e1cf0ed615dbaa139df/0e23bc94-9fe5-40dc-9327-ef12e971ce85/1920w", type: "video" },
+    { label: "CH 5 // PLANETS", url: "https://images.squarespace-cdn.com/content/v1/6ac45e1cf0ed615dbaa139df/ab3bbdb8-cd05-49fa-8b16-7eda13415a4d/2hg-+styled+planets-+2SEC.gif", type: "gif" }
+  ];
+
+  var LOOP_AT = 42; // seconds: restart the video once it reaches this point
+  var current = 0;
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function show(index) {
+    current = index;
+    var ch = channels[index];
+    if (screen && !reduceMotion) {
+      screen.classList.add("is-static");
+      setTimeout(function () { screen.classList.remove("is-static"); }, 180);
+    }
+    if (ch.type === "gif") {
+      video.pause();
+      video.hidden = true;
+      img.hidden = false;
+      img.src = ch.url;
+    } else {
+      img.hidden = true;
+      video.hidden = false;
+      video.src = ch.url;
+      video.play().catch(function () {});
+    }
+    if (osd) osd.textContent = ch.label;
+    if (readout) readout.textContent = "CHANNEL 0" + (index + 1);
+  }
+
+  button.addEventListener("click", function () {
+    show((current + 1) % channels.length);
+  });
+
+  // Loop back to the start at 42 seconds. The loop attribute on the
+  // element still handles clips that end before 42 seconds.
+  video.addEventListener("timeupdate", function () {
+    if (!video.hidden && video.currentTime >= LOOP_AT) {
+      video.currentTime = 0;
+      video.play().catch(function () {});
+    }
+  });
+
+  // Start playing the first channel on page load. The element is muted,
+  // which browsers require before they allow autoplay.
+  show(0);
+})();
+
+</script>
+</body>
+</html>
