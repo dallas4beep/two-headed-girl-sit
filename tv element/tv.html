@@ -20,6 +20,8 @@
             justify-content: center;
             overflow-x: hidden;
         }
+        /* When shown inside the home page, size to content instead of the window */
+        html.embedded body { min-height: 0; }
 
         .chunky-font {
             font-family: 'Anton', sans-serif;
@@ -157,6 +159,9 @@
                 <!-- Standby / GIF image -->
                 <img id="tv-image" src="https://images.squarespace-cdn.com/content/v1/6ac45e1cf0ed615dbaa139df/5e8617c5-5c9f-441b-856b-e249f6056aaa/thg-company-photo.png" alt="Two Headed Girl standby screen" class="w-full h-full object-cover block relative z-10">
 
+                <!-- Looping video channels -->
+                <video id="tv-video" class="absolute inset-0 w-full h-full object-cover z-10" muted loop playsinline preload="none" style="display: none;"></video>
+
                 <!-- YouTube player (created by script) -->
                 <div id="tv-player" class="absolute inset-0 z-10" style="display: none;"></div>
 
@@ -223,10 +228,12 @@
     </main>
 
     <script>
-        // Mechanical click sound for the knobs
+        // Mechanical click sound for the knobs (one shared audio context)
+        let audioCtx = null;
         function playMechanicalClick() {
             try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
 
@@ -250,18 +257,20 @@
         // Channel list.
         // type "youtube": the video ID from the YouTube URL (the part after v= or after youtu.be/).
         // type "gif": a local image file.
+        // type "video": a local looping .mp4 (much lighter than a GIF).
         // IDs starting with REPLACE_ are placeholders until you fill them in.
         const channels = [
             { label: "CH 1 // GIRL TRASH",              type: "youtube", id: "RIZQfJk0s8Q" },
             { label: "CH 2 // OUR FINGERS IN THE DIRT", type: "youtube", id: "fw-6TaWUaI8" },
             { label: "CH 3 // 2022 MINI TOUR",          type: "youtube", id: "SxtgelMdN6s" },
             { label: "CH 4 // ACID CAT",                type: "youtube", id: "aoI4noOVSKg" },
-            { label: "CH 5 // PLANETS",                 type: "gif",     url: "assets/tv-vids/planets.gif" },
-            { label: "CH 6 // BONUS",                   type: "gif", url: "assets/tv-vids/lorixdallas.gif" }
+            { label: "CH 5 // PLANETS",                 type: "video",   url: "assets/tv-vids/planets.mp4" },
+            { label: "CH 6 // BONUS",                   type: "video",   url: "assets/tv-vids/lorixdallas.mp4" }
         ];
 
         const tvImage = document.getElementById('tv-image');
         const tvPlayer = document.getElementById('tv-player');
+        const tvVideo = document.getElementById('tv-video');
         const STANDBY_SRC = tvImage.src;
         const osdChannel = document.getElementById('osd-channel');
         const channelDisplay = document.getElementById('channel-display');
@@ -312,6 +321,9 @@
         }
 
         function clearPlayer() {
+            tvVideo.pause();
+            tvVideo.removeAttribute('src');
+            tvVideo.style.display = 'none';
             tvPlayer.style.display = 'none';
             tvPlayer.innerHTML = '';
             player = null;
@@ -329,6 +341,17 @@
             clearPlayer();
             tvImage.src = channel.url;
             tvImage.style.display = 'block';
+            osdChannel.textContent = channel.label;
+            channelDisplay.textContent = `CHANNEL 0${index + 1}`;
+        }
+
+        function showVideo(channel, index) {
+            clearPlayer();
+            tvImage.style.display = 'none';
+            tvVideo.src = channel.url;
+            tvVideo.style.display = 'block';
+            const p = tvVideo.play();
+            if (p && p.catch) p.catch(() => {});
             osdChannel.textContent = channel.label;
             channelDisplay.textContent = `CHANNEL 0${index + 1}`;
         }
@@ -410,6 +433,8 @@
 
                 if (channel.type === 'gif') {
                     showGif(channel, index);
+                } else if (channel.type === 'video') {
+                    showVideo(channel, index);
                 } else {
                     showYouTube(channel, index);
                 }
@@ -456,6 +481,18 @@
 
         // Start on the standby picture
         showStandby();
+
+        // Inside the home page: tell it how tall the TV is so the frame fits
+        if (window.parent !== window) {
+            document.documentElement.classList.add('embedded');
+            const reportHeight = () => {
+                const h = document.body.getBoundingClientRect().height;
+                window.parent.postMessage({ tvHeight: h }, '*');
+            };
+            if ('ResizeObserver' in window) new ResizeObserver(reportHeight).observe(document.body);
+            window.addEventListener('load', reportHeight);
+            reportHeight();
+        }
     </script>
 </body>
 </html>

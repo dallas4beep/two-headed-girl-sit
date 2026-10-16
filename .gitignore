@@ -8,39 +8,20 @@
 .idea/
 *.swp
 
-# Dependencies and build output (not used by this site, but harmless)
+# Dependencies and build output (not used by this site)
 node_modules/
 .vercel/
 dist/
-
-# Large local media (host these elsewhere, see notes below)
-assets/tv-vids/*.mp4
-assets/tv-vids/*.mov
-assets/tv-vids/*.avi
-assets/tv-vids/*.gif
-!assets/tv-vids/planets.gif
-
-   assets/vids/*.mp4
-   assets/vids/*.mov
-   assets/vids/GAME-COVER*.gif
-   assets/vids/GT-*.gif
 
 # Local checks and backups
 check-files.html
 video-test.html
 tv-originals/
 
-cat >> .gitignore << 'EOF'
-
-# Duplicate test folder
-tv element/
-
-# Large media (too big for GitHub)
+# Large source media kept off GitHub (the site uses the small .mp4 versions)
+*.mov
 assets/vids/Girl trash.mp4
 assets/vids/thg_banner_vid.mp4
 assets/vids/thg-banner-vid.mp4
 assets/vids/2HG-VIDEO-OURFINGERSINTHEDIRT.mp4
 assets/vids/2HG-VIDEO-2022MINITOUR.mp4
-assets/vids/GAME-COVER- ESCAPE-THE-STRAP-ROOMS .gif
-assets/vids/GT- PHONE CONVO ANIMATON.gif
-EOF

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://2headedgirl.com/sitemap.xml
+Sitemap: https://twoheadedgirl.com/sitemap.xml
