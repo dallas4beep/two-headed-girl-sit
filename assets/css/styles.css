@@ -1181,6 +1181,7 @@ body::after {
 .foot {
   border-top: 1px solid var(--line-mid);
   margin-top: 4rem;
+  margin-left: var(--rail-w); /* clear the fixed side rail, like .page does */
   padding: 3rem var(--gutter) 2rem;
   font-family: var(--ff-mono);
   font-size: var(--t-mono);
