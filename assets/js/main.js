@@ -37,7 +37,7 @@
         const list = document.querySelector(group.getAttribute('data-filter-target'));
         if (!list) return;
         list.querySelectorAll('[data-tag]').forEach((card) => {
-          if (target === 'all' || card.getAttribute('data-tag').includes(target)) {
+          if (target.toLowerCase() === 'all' || card.getAttribute('data-tag').includes(target)) {
             card.style.display = '';
           } else {
             card.style.display = 'none';

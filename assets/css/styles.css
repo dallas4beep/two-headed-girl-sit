@@ -1426,7 +1426,7 @@ body::after {
 ============================================================= */
 .artist-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr)); /* all four artists in one row */
   gap: 1.5rem;
   padding: 0 var(--gutter) var(--section-pad);
   max-width: var(--max);
@@ -1459,12 +1459,21 @@ body::after {
 }
 .artist-card:hover::before { transform: scaleX(1); }
 .artist-card__portrait {
-  aspect-ratio: 5 / 6;
+  aspect-ratio: 1 / 1; /* sprites are square, so every one fills its box */
   background: var(--ink-300);
   position: relative;
   overflow: hidden;
 }
 .artist-card__portrait svg { width: 100%; height: 100%; }
+/* Every sprite fills an identical box edge to edge, no stretching */
+.artist-card__portrait img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
 .artist-card__num {
   position: absolute;
   top: 8px;
@@ -1539,6 +1548,8 @@ body::after {
   overflow: hidden;
 }
 .release-card__cover svg { width: 100%; height: 100%; }
+.release-card__cover > a { display: block; width: 100%; height: 100%; }
+.release-card__cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .release-card__cat {
   font-family: var(--ff-mono);
   font-size: var(--t-mono-sm);
@@ -1637,7 +1648,7 @@ body::after {
     grid-template-columns: 1fr 1fr;
   }
   .hero__center { grid-column: 1 / -1; order: -1; }
-  .releases, .press, .release-grid, .artist-grid {
+  .releases, .press, .release-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   .roster__row {
@@ -1705,14 +1716,11 @@ body::after {
   .foot__grid { grid-template-columns: 1fr; }
   .two-col { grid-template-columns: 1fr; }
 }
-/* Stack artist cards on mobile */
+/* Artists: 4 across on desktop, 2x2 on small tablets, stacked on phones */
+@media (max-width: 900px) {
+  .artist-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 720px) {
-  .artist-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  .artist-card {
-    width: 100%;
-  }
+  .artist-grid { grid-template-columns: 1fr; }
+  .artist-card__portrait { max-width: 420px; width: 100%; margin-inline: auto; }
 }
